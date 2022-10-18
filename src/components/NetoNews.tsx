@@ -1,8 +1,14 @@
-import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React, { ReactElement, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { NewsItem } from '../interfaces';
 import NetoError from './NetoError';
 
-export default function NetoNews({news, checkId}) {
+type Props = {
+  news: NewsItem
+}
+
+export default function NetoNews({news}: Props): ReactElement {
+  const [newsId, setNewsId] = useState<string>('')
   const params = useParams()
   if (!news) {
     return (
@@ -15,7 +21,7 @@ export default function NetoNews({news, checkId}) {
         if (params.newsId) {
           ev.preventDefault()
         } else {
-          checkId(news.id)
+          setNewsId(news.id)
         }
       }} className="news">
       <img src={news.image} alt={news.title} />

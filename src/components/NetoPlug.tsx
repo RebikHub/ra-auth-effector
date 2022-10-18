@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { ReactElement } from 'react';
 
-export default function NetoPlug() {
+export default function NetoPlug(): ReactElement {
   return (
     <div className="plug">
       <h2>Neto Social</h2>

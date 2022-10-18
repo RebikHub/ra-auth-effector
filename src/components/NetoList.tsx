@@ -1,13 +1,19 @@
-import React from 'react'
-import NetoNews from './NetoNews'
+import React, { ReactElement, useState } from 'react';
+import { NewsList } from '../interfaces';
+import NetoNews from './NetoNews';
 
-export default function NetoList({news, checkId}) {
+type Props = {
+  news: NewsList
+}
+
+export default function NetoList({news}: Props): ReactElement {
+  const [newsId, setNewsId] = useState<string | null>(null)
+
   return (
     <div className="news-list">
       {news.map((el) =>
         <NetoNews
           news={el}
-          checkId={checkId}
           key={el.id}/>
         )}
     </div>

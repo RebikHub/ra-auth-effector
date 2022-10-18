@@ -1,7 +1,32 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { ChangeEvent, useState } from 'react';
+import { ReactElement } from 'react';
+import { Link } from 'react-router-dom';
 
-export default function NetoForm({login, password, handleInputLogin, handleInputPassword, handleClickIn}) {
+type StateInput = {
+  login: string,
+  password: string
+};
+
+export default function NetoForm(): ReactElement {
+  const [login, setLogin] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [input, setInput] = useState<StateInput>({
+    login: '', 
+    password: ''
+  });
+
+
+  function handleClickIn() {
+    if (login !== '' && password !== '') {
+      setInput({
+        login: login, 
+        password: password
+      })
+      setLogin('')
+      setPassword('')
+    }
+  }
+
   return (
     <form className="form">
       <input 
@@ -10,14 +35,14 @@ export default function NetoForm({login, password, handleInputLogin, handleInput
         placeholder="Username"
         required
         value={login}
-        onChange={handleInputLogin}/>
+        onChange={(ev: ChangeEvent<HTMLInputElement>) => setLogin(ev.target.value)}/>
       <input
         type="password"
         className="input-password"
         placeholder="Password"
         required
         value={password}
-        onChange={handleInputPassword}/>
+        onChange={(ev: ChangeEvent<HTMLInputElement>) => setPassword(ev.target.value)}/>
       <Link
         to={'/news'}
         className="form-btn"

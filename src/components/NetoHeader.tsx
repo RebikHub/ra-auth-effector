@@ -1,3 +1,4 @@
+import React from "react";
 import { ReactElement, ReactNode } from "react";
 
 type Props = {
@@ -11,4 +12,4 @@ export default function NetoHeader({children}: Props): ReactElement {
       {children}
     </div>
   );
-};
+}

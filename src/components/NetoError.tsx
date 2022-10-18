@@ -1,6 +1,11 @@
-import React from 'react'
+import React from 'react';
+import { ReactElement } from 'react';
 
-export default function NetoError({error}) {
+type Props = {
+  error: string
+};
+
+export default function NetoError({error}: Props): ReactElement {
   return (
     <div className='error'>Error: {error}</div>
   )
