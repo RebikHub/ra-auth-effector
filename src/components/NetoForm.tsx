@@ -1,6 +1,8 @@
-import React, { ChangeEvent, useState } from 'react';
+import { useStore } from 'effector-react';
+import React, { ChangeEvent, MouseEvent, ReactHTML, useState } from 'react';
 import { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
+import { $form, inputLogin, inputPassword, submitForm } from '../effector/form';
 
 type StateInput = {
   login: string,
@@ -8,25 +10,21 @@ type StateInput = {
 };
 
 export default function NetoForm(): ReactElement {
-  const [login, setLogin] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [input, setInput] = useState<StateInput>({
-    login: '', 
-    password: ''
-  });
+  const formStore = useStore($form);
 
-
-  function handleClickIn() {
-    if (login !== '' && password !== '') {
-      setInput({
-        login: login, 
-        password: password
-      })
-      setLogin('')
-      setPassword('')
-    }
+  function handleClickIn(ev: MouseEvent<HTMLElement>) {
+    // if (formStore.login !== '' && formStore.password !== '') {
+    //   setInput({
+    //     login: login, 
+    //     password: password
+    //   })
+    //   setLogin('')
+    //   setPassword('')
+    // }
+    ev.preventDefault()
+    submitForm()
   }
-
+  // setLogin(ev.target.value)
   return (
     <form className="form">
       <input 
@@ -34,19 +32,20 @@ export default function NetoForm(): ReactElement {
         className="input-name"
         placeholder="Username"
         required
-        value={login}
-        onChange={(ev: ChangeEvent<HTMLInputElement>) => setLogin(ev.target.value)}/>
+        value={formStore.login}
+        onChange={(ev: ChangeEvent<HTMLInputElement>) => inputLogin(ev.target.value)}/>
       <input
         type="password"
         className="input-password"
         placeholder="Password"
         required
-        value={password}
-        onChange={(ev: ChangeEvent<HTMLInputElement>) => setPassword(ev.target.value)}/>
+        value={formStore.password}
+        onChange={(ev: ChangeEvent<HTMLInputElement>) => inputPassword(ev.target.value)}/>
       <Link
         to={'/news'}
         className="form-btn"
-        onClick={handleClickIn}>Login</Link>
+        onClick={handleClickIn}
+        >Login</Link>
     </form>
   )
 }

@@ -1,13 +1,12 @@
+import { useStore } from 'effector-react';
 import React, { useState } from 'react';
 import { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
+import { $user } from '../effector/user';
 import { User } from '../interfaces';
 
-type Props = {
-  user: User
-};
-
-export default function NetoLogout({user}: Props): ReactElement {
+export default function NetoLogout(): ReactElement {
+  const user = useStore($user);
     const [input, setInput] = useState<string>('');
     const [output, setOutput] = useState<boolean>(false);
 
