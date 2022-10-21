@@ -17,7 +17,7 @@ const tokens = new Map();
 const users = new Map();
 const rounds = 10;
 
-users.set('vasya', { id: uuid.v4(), login: 'vasya', name: 'Vasya', password: bcrypt.hashSync('password', rounds), avatar: 'https://i.pravatar.cc/40' });
+users.set('demo', { id: uuid.v4(), login: 'demo', name: 'demo', password: bcrypt.hashSync('demo', rounds), avatar: 'https://i.pravatar.cc/40' });
 
 const news = [
     {

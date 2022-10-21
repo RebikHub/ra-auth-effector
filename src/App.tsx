@@ -9,36 +9,37 @@ import NetoError from "./components/NetoError";
 import NetoNews from "./components/NetoNews";
 import NetoLoader from "./components/NetoLoader";
 import { useStore } from "effector-react";
-import { $inputLoad } from "./effector/form";
+import { $formError, startInputFx } from "./effector/form";
+import { getNewsListFx } from "./effector/news";
 
 export default function App() {
-  const inputLoading = useStore($inputLoad);
-  console.log(inputLoading);
+  const userLoad = useStore(startInputFx.pending);
+  const newsLoad = useStore(getNewsListFx.pending);
+  const error = useStore($formError);
+  console.log('startInput - ', userLoad);
+  console.log('newsList - ', newsLoad);
   
-
-  // if (error) {
-  //   return (<NetoError error={error}/>)
-  // }
+  
 
   return (
     <Routes>
       <Route index path="/" element={
         <>
           <NetoHeader>
-            {inputLoading ? <NetoLoader styleName={"loader-auth"}/> : <NetoForm/>}
+            {userLoad ? <NetoLoader styleName={"loader-auth"}/> : <NetoForm/>}
           </NetoHeader>
-          <NetoPlug/>
+          {error ? <NetoError error={error.message}/> : <NetoPlug/>}
         </>
       }/>
-      <Route path="/news" element={
+      <Route path="news" element={
         <>
           <NetoHeader>
             <NetoLogout/>
           </NetoHeader>
-          {/* <NetoList news={news}/> */}
+          {newsLoad || userLoad ? <NetoLoader styleName={''}/> : <NetoList/>}
         </>
       }/>
-      <Route path="/news/:newsId" element={
+      <Route path="news/:newsId" element={
         <>
           <NetoHeader>
             <NetoLogout/>

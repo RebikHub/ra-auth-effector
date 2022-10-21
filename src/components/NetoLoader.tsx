@@ -4,7 +4,7 @@ type Props = {
   styleName: string
 };
 
-export default function NetoLoader({styleName = ''}: Props): ReactElement {
+export default function NetoLoader({styleName}: Props): ReactElement {
   return (
     <div className={`loader ${styleName}`}>Loading...</div>
   );

@@ -1,5 +1,4 @@
-import { createEffect, createEvent, createStore, forward, sample } from "effector";
-import { fetchPostAuth } from "../custom_hook/middleware";
+import { createEffect, createEvent, createStore, forward, restore, sample } from "effector";
 
 type Input = {
   login: string,
@@ -10,10 +9,6 @@ const inputLogin = createEvent<string>();
 const inputPassword = createEvent<string>();
 const resetForm = createEvent();
 const submitForm = createEvent();
-const submitLoading = createEvent<boolean>();
-
-const $inputLoad = createStore(false);
-$inputLoad.on(submitLoading, (state, newState) => newState);
 
 const $form = createStore({
   login: '',
@@ -32,26 +27,30 @@ $form.on(inputPassword, (state, newState) => ({
 
 $form.reset(resetForm);
 
-const startInputFx = createEffect((input: Input) => {
-  fetchPostAuth(input)
-  console.log('effect start');
+const startInputFx = createEffect(async (input: Input) => {
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(
+      fetch(process.env.REACT_APP_AUTH, {
+        method: 'POST',
+        body: JSON.stringify(input)
+      })
+        .then((resp) => {
+          if (resp.status === 400) {
+            localStorage.removeItem('token');
+            throw new Error('user not found');
+          }
+          return resp.json();
+        })
+        .then((token) => {
+          localStorage.setItem('token', JSON.stringify(token))
+        }))
+    }, 3 * 1000)
+  })
 })
 
-startInputFx.pending.watch((e) => {
-  submitLoading(true);
-  console.log('вызов с аргументом pending', e)
-  console.log('завершён с pending', e)
-})
-
-startInputFx.done.watch(({result, params}) => {
-  console.log('вызвов с аргументом done', params)
-  console.log('завершён со значением', result)
-})
-
-startInputFx.fail.watch(({error, params}) => {
-  console.log('вызов с аргументом fail', params)
-  console.log('завершён с ошибкой', error)
-})
+const $formError = restore<Error>(startInputFx.failData, null);
+$formError.reset(startInputFx.done)
 
 sample({
   source: $form,
@@ -64,4 +63,4 @@ forward({
   to: resetForm
 });
 
-export {inputLogin, inputPassword, resetForm, submitForm, $form, $inputLoad};
+export {inputLogin, inputPassword, resetForm, submitForm, startInputFx, $form, $formError};

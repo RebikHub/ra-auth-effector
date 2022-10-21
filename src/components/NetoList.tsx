@@ -1,20 +1,18 @@
-import React, { ReactElement, useState } from 'react';
-import { NewsList } from '../interfaces';
+import { useStore } from 'effector-react';
+import React, { ReactElement } from 'react';
+import { $news } from '../effector/news';
 import NetoNews from './NetoNews';
 
-type Props = {
-  news: NewsList
-}
-
-export default function NetoList({news}: Props): ReactElement {
-  const [newsId, setNewsId] = useState<string | null>(null)
+export default function NetoList(): ReactElement {
+  const news = useStore($news);
+  console.log(news);
 
   return (
     <div className="news-list">
-      {news.map((el) =>
+      {news.map((el, i) =>
         <NetoNews
           news={el}
-          key={el.id}/>
+          key={i}/>
         )}
     </div>
   )

@@ -1,51 +1,45 @@
 import { useStore } from 'effector-react';
-import React, { ChangeEvent, MouseEvent, ReactHTML, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect } from 'react';
 import { ReactElement } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { $form, inputLogin, inputPassword, submitForm } from '../effector/form';
-
-type StateInput = {
-  login: string,
-  password: string
-};
+import { $news } from '../effector/news';
 
 export default function NetoForm(): ReactElement {
-  const formStore = useStore($form);
+  const form = useStore($form);
+  const news = useStore($news);
+  const navigate = useNavigate();
 
-  function handleClickIn(ev: MouseEvent<HTMLElement>) {
-    // if (formStore.login !== '' && formStore.password !== '') {
-    //   setInput({
-    //     login: login, 
-    //     password: password
-    //   })
-    //   setLogin('')
-    //   setPassword('')
-    // }
-    ev.preventDefault()
-    submitForm()
-  }
-  // setLogin(ev.target.value)
+  function handleClickIn(ev: FormEvent<HTMLFormElement>) {
+    ev.preventDefault();
+    submitForm();
+  };
+
+  useEffect(() => {
+    console.log(news);
+    
+    if (news.length) {
+      navigate('/news')
+    }
+  }, [news.length])
+
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleClickIn}>
       <input 
         type="text"
         className="input-name"
         placeholder="Username"
         required
-        value={formStore.login}
+        value={form.login}
         onChange={(ev: ChangeEvent<HTMLInputElement>) => inputLogin(ev.target.value)}/>
       <input
         type="password"
         className="input-password"
         placeholder="Password"
         required
-        value={formStore.password}
+        value={form.password}
         onChange={(ev: ChangeEvent<HTMLInputElement>) => inputPassword(ev.target.value)}/>
-      <Link
-        to={'/news'}
-        className="form-btn"
-        onClick={handleClickIn}
-        >Login</Link>
+      <button className="form-btn" type='submit'>Login</button>
     </form>
   )
 }

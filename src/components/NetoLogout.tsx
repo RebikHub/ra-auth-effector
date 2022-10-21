@@ -1,19 +1,25 @@
+import React, { useEffect } from 'react';
 import { useStore } from 'effector-react';
-import React, { useState } from 'react';
 import { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { $user } from '../effector/user';
-import { User } from '../interfaces';
+import { $user, clearUser, reGetUser } from '../effector/user';
+import { clearNewsList } from '../effector/news';
 
 export default function NetoLogout(): ReactElement {
   const user = useStore($user);
-    const [input, setInput] = useState<string>('');
-    const [output, setOutput] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (localStorage.token && user.id === '') {
+      console.log(user);
+      reGetUser();
+    }
+  }, []);
+  
 
   function handleClickOut() {
-    setOutput(true)
-    setInput('')
-    setTimeout(() => setOutput(false), 2*1000)
+    clearUser();
+    localStorage.clear();
+    clearNewsList();
   }
 
   return (
