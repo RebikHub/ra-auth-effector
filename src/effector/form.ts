@@ -10,7 +10,7 @@ const inputPassword = createEvent<string>();
 const resetForm = createEvent();
 const submitForm = createEvent();
 
-const $form = createStore({
+const $form = createStore<Input>({
   login: '',
   password: ''
 });

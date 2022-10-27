@@ -1,16 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useStore } from 'effector-react';
 import { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { $user, clearUser, reGetUser } from '../effector/user';
 import { clearNewsList } from '../effector/news';
+import { resetNewsId, resetNewsItem } from '../effector/newsId';
 
 export default function NetoLogout(): ReactElement {
   const user = useStore($user);
 
   useEffect(() => {
     if (localStorage.token && user.id === '') {
-      console.log(user);
       reGetUser();
     }
   }, []);
@@ -20,6 +21,8 @@ export default function NetoLogout(): ReactElement {
     clearUser();
     localStorage.clear();
     clearNewsList();
+    resetNewsItem();
+    resetNewsId();
   };
 
   return (

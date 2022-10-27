@@ -80,13 +80,16 @@ router.post('/auth', async (ctx, next) => {
 });
 
 router.use('/private**', bearerAuth);
+
 router.get('/private/me', async (ctx, next) => {
     const { user } = ctx.state;
     ctx.response.body = { id: user.id, login: user.login, name: user.name, avatar: user.avatar };
 });
+
 router.get('/private/news', async (ctx, next) => {
     ctx.response.body = news; 
 });
+
 router.get('/private/news/:id', async (ctx, next) => {
     const [item] = news.filter(o => o.id === ctx.params.id);
     console.log(ctx.params.id);

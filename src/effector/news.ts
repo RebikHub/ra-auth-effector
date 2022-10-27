@@ -1,10 +1,11 @@
 import { createEffect, createEvent, createStore, sample } from "effector";
+import { NewsItem } from "../interfaces";
 import { submitForm } from "./form";
 import { reGetUser } from "./user";
 
-export const $news = createStore([]);
+export const $news = createStore<NewsItem[]>([]);
 
-export const addNewsList = createEvent();
+export const addNewsList = createEvent<NewsItem[]>();
 export const clearNewsList = createEvent();
 
 $news.on(addNewsList, (state, newState) => newState);

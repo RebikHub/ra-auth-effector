@@ -37,7 +37,7 @@ export default function useFetchAuthorization(input, output, saveToken, newsId) 
   }
 
   useEffect(() => {
-    if (newsId !== null) {
+    if (newsId) {
       fetchNews(token.token, newsId)
       fetch(process.env.REACT_APP_NEWS_ID + newsId, {
         method: 'GET',
@@ -48,7 +48,7 @@ export default function useFetchAuthorization(input, output, saveToken, newsId) 
         .then(resp => {
           if(resp.status === 404) {
             setError('404 Not Found')
-            throw new Error('404 Not Foynd')
+            throw new Error('404 Not Found')
           }
           setError(null)
           return resp.json()

@@ -5,7 +5,6 @@ import NetoNews from './NetoNews';
 
 export default function NetoList(): ReactElement {
   const news = useStore($news);
-  console.log(news);
 
   return (
     <div className="news-list">

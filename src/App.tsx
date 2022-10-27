@@ -11,13 +11,18 @@ import NetoLoader from "./components/NetoLoader";
 import { useStore } from "effector-react";
 import { $formError, startInputFx, resetForm } from "./effector/form";
 import { getNewsListFx } from "./effector/news";
+import { $newsItem, getNewsIdFx } from "./effector/newsId";
 
 function App(): ReactElement {
   const userLoad = useStore(startInputFx.pending);
   const newsLoad = useStore(getNewsListFx.pending);
+  const newsItemLoad = useStore(getNewsIdFx.pending);
   const error = useStore($formError);
+  const newsItem = useStore($newsItem);
   console.log('userInput - ', userLoad);
   console.log('newsList - ', newsLoad);
+  console.log('idLoad - ', newsItemLoad, newsItem);
+  
 
   useEffect(() => {
     if (error) {
@@ -51,7 +56,7 @@ function App(): ReactElement {
           <NetoHeader>
             <NetoLogout/>
           </NetoHeader>
-          {/* <NetoNews news={newsOne}/> */}
+          {newsItemLoad ? <NetoLoader styleName={''}/> : <NetoNews news={newsItem}/>}
         </>
       }/>
     </Routes>

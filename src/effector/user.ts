@@ -1,8 +1,8 @@
-import { createEffect, createEvent, createStore, forward, sample } from "effector";
+import { createEffect, createEvent, createStore, sample } from "effector";
 import { User } from "../interfaces";
 import { submitForm } from "./form";
 
-const responseUser = createEvent();
+const responseUser = createEvent<User>();
 const clearUser = createEvent();
 const reGetUser = createEvent();
 
@@ -13,13 +13,12 @@ const user: User = {
   name: ''
 };
 
-const $user = createStore(user);
+const $user = createStore<User>(user);
 $user.on(responseUser, (curState, newState) => newState);
 $user.reset(clearUser);
 
 const getUserFx = createEffect(async () => {
   const { token } = JSON.parse(localStorage.getItem('token') || '');
-  console.log('fx token', token);
   
   await fetch(process.env.REACT_APP_ME, {
       method: 'GET',
