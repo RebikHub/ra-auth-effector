@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, ReactElement, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import NetoForm from "./components/NetoForm";
 import NetoHeader from "./components/NetoHeader";
@@ -9,15 +9,22 @@ import NetoError from "./components/NetoError";
 import NetoNews from "./components/NetoNews";
 import NetoLoader from "./components/NetoLoader";
 import { useStore } from "effector-react";
-import { $formError, startInputFx } from "./effector/form";
+import { $formError, startInputFx, resetForm } from "./effector/form";
 import { getNewsListFx } from "./effector/news";
 
-export default function App() {
+function App(): ReactElement {
   const userLoad = useStore(startInputFx.pending);
   const newsLoad = useStore(getNewsListFx.pending);
   const error = useStore($formError);
-  console.log('startInput - ', userLoad);
+  console.log('userInput - ', userLoad);
   console.log('newsList - ', newsLoad);
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => resetForm(), 2 * 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [error])
   
   
 
@@ -34,7 +41,7 @@ export default function App() {
       <Route path="news" element={
         <>
           <NetoHeader>
-            <NetoLogout/>
+            {userLoad ? <NetoLoader styleName={"loader-auth"}/> : <NetoLogout/>}
           </NetoHeader>
           {newsLoad || userLoad ? <NetoLoader styleName={''}/> : <NetoList/>}
         </>
@@ -50,3 +57,5 @@ export default function App() {
     </Routes>
   );
 }
+
+export default memo(App)

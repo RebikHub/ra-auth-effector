@@ -1,13 +1,11 @@
 import { useStore } from 'effector-react';
 import { ChangeEvent, FormEvent, useEffect } from 'react';
 import { ReactElement } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { $form, inputLogin, inputPassword, submitForm } from '../effector/form';
-import { $news } from '../effector/news';
 
 export default function NetoForm(): ReactElement {
   const form = useStore($form);
-  const news = useStore($news);
   const navigate = useNavigate();
 
   function handleClickIn(ev: FormEvent<HTMLFormElement>) {
@@ -16,12 +14,11 @@ export default function NetoForm(): ReactElement {
   };
 
   useEffect(() => {
-    console.log(news);
-    
-    if (news.length) {
+    const token = localStorage.getItem('token');
+    if (token) {
       navigate('/news')
-    }
-  }, [news.length])
+    };
+  });
 
   return (
     <form className="form" onSubmit={handleClickIn}>

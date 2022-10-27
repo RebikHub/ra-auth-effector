@@ -20,7 +20,7 @@ export default function NetoLogout(): ReactElement {
     clearUser();
     localStorage.clear();
     clearNewsList();
-  }
+  };
 
   return (
     <div className="auth">
@@ -32,4 +32,4 @@ export default function NetoLogout(): ReactElement {
         onClick={handleClickOut}>Logout</Link>
     </div>
   )
-}
+};

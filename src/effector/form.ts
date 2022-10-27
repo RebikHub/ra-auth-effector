@@ -51,6 +51,7 @@ const startInputFx = createEffect(async (input: Input) => {
 
 const $formError = restore<Error>(startInputFx.failData, null);
 $formError.reset(startInputFx.done)
+$formError.reset(resetForm)
 
 sample({
   source: $form,
