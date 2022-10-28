@@ -1,5 +1,6 @@
 import React from "react";
 import { ReactElement, ReactNode } from "react";
+import styles from '../styles/Header.module.css';
 
 type Props = {
   children: ReactNode
@@ -7,8 +8,8 @@ type Props = {
 
 export default function NetoHeader({children}: Props): ReactElement {
   return (
-    <div className="header-social">
-      <h4 className="header-title">Neto Social</h4>
+    <div className={styles.social}>
+      <h4 className={styles.title}>Neto Social</h4>
       {children}
     </div>
   );

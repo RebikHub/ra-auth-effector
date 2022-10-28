@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { $user, clearUser, reGetUser } from '../effector/user';
 import { clearNewsList } from '../effector/news';
 import { resetNewsId, resetNewsItem } from '../effector/newsId';
+import styles from '../styles/Logout.module.css';
 
 export default function NetoLogout(): ReactElement {
   const user = useStore($user);
@@ -26,12 +27,12 @@ export default function NetoLogout(): ReactElement {
   };
 
   return (
-    <div className="auth">
+    <div className={styles.auth}>
       <h5>{user.name}</h5>
       <img src={user.avatar} alt={user.name} />
       <Link
         to={'/'}
-        className="btn-out"
+        className={styles.button}
         onClick={handleClickOut}>Logout</Link>
     </div>
   )

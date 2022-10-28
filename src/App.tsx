@@ -1,5 +1,5 @@
 import React, { memo, ReactElement, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import NetoForm from "./components/NetoForm";
 import NetoHeader from "./components/NetoHeader";
 import NetoList from "./components/NetoList";
@@ -19,24 +19,32 @@ function App(): ReactElement {
   const newsItemLoad = useStore(getNewsIdFx.pending);
   const error = useStore($formError);
   const newsItem = useStore($newsItem);
+  const navigate = useNavigate();
+  const location = useLocation();
   
-  useEffect(() => localStorage.clear(), [])
+  useEffect(() => localStorage.clear(), []);
 
   useEffect(() => {
     if (error) {
       const timer = setTimeout(() => resetForm(), 2 * 1000)
       return () => clearTimeout(timer)
     }
-  }, [error])
-  
-  
+  }, [error]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token && location.pathname !== '/') {
+      navigate('/');
+    };
+  }, [location.pathname, navigate]);
+
 
   return (
     <Routes>
       <Route index path="/" element={
         <>
           <NetoHeader>
-            {userLoad ? <NetoLoader styleName={"loader-auth"}/> : <NetoForm/>}
+            {userLoad ? <NetoLoader styleName={"loaderAuth"}/> : <NetoForm/>}
           </NetoHeader>
           {error ? <NetoError error={error.message}/> : <NetoPlug/>}
         </>
@@ -44,7 +52,7 @@ function App(): ReactElement {
       <Route path="news" element={
         <>
           <NetoHeader>
-            {userLoad ? <NetoLoader styleName={"loader-auth"}/> : <NetoLogout/>}
+            {userLoad ? <NetoLoader styleName={"loaderAuth"}/> : <NetoLogout/>}
           </NetoHeader>
           {newsLoad || userLoad ? <NetoLoader styleName={''}/> : <NetoList/>}
         </>

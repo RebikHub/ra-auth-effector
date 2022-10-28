@@ -1,0 +1,26 @@
+.news {
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  border: 1px solid #00000059;
+  width: 48%;
+  margin: 10px auto;
+  text-decoration: none;
+  color: black;
+}
+
+.news > img {
+  width: 100%;
+}
+
+.text {
+  font-size: large;
+}
+
+.text > h5 {
+  text-transform: capitalize;
+}
+
+.text > h5, .text > p {
+  padding: 5px;
+}

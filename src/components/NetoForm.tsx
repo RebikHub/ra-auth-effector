@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useEffect } from 'react';
 import { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { $form, inputLogin, inputPassword, submitForm } from '../effector/form';
+import styles from '../styles/Form.module.css';
 
 export default function NetoForm(): ReactElement {
   const form = useStore($form);
@@ -21,22 +22,22 @@ export default function NetoForm(): ReactElement {
   });
 
   return (
-    <form className="form" onSubmit={handleClickIn}>
+    <form className={styles.form} onSubmit={handleClickIn}>
       <input 
         type="text"
-        className="input-name"
+        className={styles.input}
         placeholder="Username"
         required
         value={form.login}
         onChange={(ev: ChangeEvent<HTMLInputElement>) => inputLogin(ev.target.value)}/>
       <input
         type="password"
-        className="input-password"
+        className={styles.input}
         placeholder="Password"
         required
         value={form.password}
         onChange={(ev: ChangeEvent<HTMLInputElement>) => inputPassword(ev.target.value)}/>
-      <button className="form-btn" type='submit'>Login</button>
+      <button className={styles.button} type='submit'>Login</button>
     </form>
   )
 }

@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import { $newsId, newsId, newsItem } from '../effector/newsId';
 import { NewsItem } from '../interfaces';
 import NetoError from './NetoError';
+import styles from '../styles/News.module.css';
 
 type Props = {
   news: NewsItem | null
@@ -29,9 +30,9 @@ function NetoNews({news}: Props): ReactElement {
   }
 
   return (
-    <Link to={`/news/${news.id}`} className="news">
+    <Link to={`/news/${news.id}`} className={styles.news}>
       <img src={news.image} alt={news.title} />
-      <div className="news-text">
+      <div className={styles.text}>
         <h5>{news.title}</h5>
         <p>{news.content}</p>
       </div>

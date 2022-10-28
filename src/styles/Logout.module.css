@@ -1,0 +1,32 @@
+.auth {
+  display: flex;
+  margin: 0 20px 0 auto;
+  height: 30px;
+}
+
+.auth > img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 0 5px;
+}
+
+.auth > h5 {
+  align-self: center;
+  font-size: large;
+  font-weight: 300;
+}
+
+.button {
+  color: #f44336;
+  border: 1px solid #f44336;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 60px;
+  line-height: 27px;
+  font-size: large;
+  border-radius: 3px;
+  font-weight: bolder;
+  cursor: pointer;
+}

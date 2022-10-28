@@ -1,0 +1,26 @@
+.form {
+  margin: 0 20px 0 auto;
+}
+
+.input {
+  margin-right: 10px;
+  height: 30px;
+  padding-left: 4px;
+  border-radius: 3px;
+  border: 1px solid #00000059;
+}
+
+.button {
+  color: #2bc22b;
+  border: 1px solid #2bc22b;
+  box-sizing: border-box;
+  text-align: center;
+  width: 60px;
+  line-height: 27px;
+  vertical-align: bottom;
+  height: 30px;
+  font-size: large;
+  border-radius: 3px;
+  font-weight: bolder;
+  cursor: pointer;
+}

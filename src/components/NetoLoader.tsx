@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import styles from '../styles/Loader.module.css';
 
 type Props = {
   styleName: string
@@ -6,6 +7,6 @@ type Props = {
 
 export default function NetoLoader({styleName}: Props): ReactElement {
   return (
-    <div className={`loader ${styleName}`}>Loading...</div>
+    <div className={`${styles.loader} ${styles[styleName]}`}>Loading...</div>
   );
 };
