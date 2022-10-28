@@ -42,11 +42,6 @@ sample({
   clock: [submitForm, reGetUser]
 });
 
-// forward({
-//   from: [submitForm, reGetUser],
-//   to: clearUser
-// })
-
 export {
   responseUser, 
   clearUser,

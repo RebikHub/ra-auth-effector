@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useStore } from 'effector-react';
-import React, { ReactElement, useEffect } from 'react';
+import React, { memo, ReactElement, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { $newsId, getNewsId, getNewsIdFx, newsId, newsItem } from '../effector/newsId';
+import { $newsId, newsId, newsItem } from '../effector/newsId';
 import { NewsItem } from '../interfaces';
 import NetoError from './NetoError';
 
@@ -9,24 +10,19 @@ type Props = {
   news: NewsItem | null
 };
 
-export default function NetoNews({news}: Props): ReactElement {
+function NetoNews({news}: Props): ReactElement {
   const params = useParams();
   const id = useStore($newsId);
-  console.log(news);
 
   useEffect(() => {
     if (news) {
       newsItem(news);
     } else if(!news && params.newsId && id === '') {
-      console.log(id);
-      
-      console.log(!news, params.newsId);
-      
-      // newsId(params.newsId)
+      newsId(params.newsId)
     }
   }, []);
   
-  if (!news || getNewsIdFx.done.) {   // сделать обработчики ошибок на getUser and GetId
+  if (!news) {
     return (
       <NetoError error={'404 Not Found'}/>
     )
@@ -42,3 +38,5 @@ export default function NetoNews({news}: Props): ReactElement {
     </Link>
   )
 }
+
+export default memo(NetoNews);

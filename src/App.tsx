@@ -19,10 +19,8 @@ function App(): ReactElement {
   const newsItemLoad = useStore(getNewsIdFx.pending);
   const error = useStore($formError);
   const newsItem = useStore($newsItem);
-  console.log('userInput - ', userLoad);
-  console.log('newsList - ', newsLoad);
-  console.log('idLoad - ', newsItemLoad, newsItem);
   
+  useEffect(() => localStorage.clear(), [])
 
   useEffect(() => {
     if (error) {

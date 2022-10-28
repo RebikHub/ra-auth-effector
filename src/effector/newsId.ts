@@ -17,7 +17,9 @@ $newsId.reset(resetNewsId);
 
 const getNewsIdFx = createEffect(async () => {
   const { token } = JSON.parse(localStorage.getItem('token') || '');
-  await fetch(process.env.REACT_APP_NEWS + $newsId, {
+  const id = $newsId.getState();
+  
+  await fetch(`${process.env.REACT_APP_NEWS}/${id}`, {
     method: 'GET',
     headers: {
       'Authorization': 'Bearer ' + token
