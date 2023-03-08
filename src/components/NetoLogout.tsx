@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useStore } from 'effector-react';
 import { ReactElement } from 'react';
@@ -15,7 +14,7 @@ export default function NetoLogout(): ReactElement {
     if (localStorage.token && user.id === '') {
       reGetUser();
     }
-  }, []);
+  }, [user.id]);
   
 
   function handleClickOut() {

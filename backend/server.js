@@ -17,7 +17,13 @@ const tokens = new Map();
 const users = new Map();
 const rounds = 10;
 
-users.set('demo', { id: uuid.v4(), login: 'demo', name: 'demo', password: bcrypt.hashSync('demo', rounds), avatar: 'https://i.pravatar.cc/40' });
+users.set('demo', {
+    id: uuid.v4(),
+    login: 'demo',
+    name: 'demo',
+    password: bcrypt.hashSync('demo', rounds),
+    avatar: 'https://i.pravatar.cc/40'
+});
 
 const news = [
     {
@@ -83,7 +89,12 @@ router.use('/private**', bearerAuth);
 
 router.get('/private/me', async (ctx, next) => {
     const { user } = ctx.state;
-    ctx.response.body = { id: user.id, login: user.login, name: user.name, avatar: user.avatar };
+    ctx.response.body = {
+        id: user.id,
+        login: user.login,
+        name: user.name,
+        avatar: user.avatar
+    };
 });
 
 router.get('/private/news', async (ctx, next) => {

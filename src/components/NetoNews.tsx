@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useStore } from 'effector-react';
 import React, { memo, ReactElement, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -21,7 +20,7 @@ function NetoNews({news}: Props): ReactElement {
     } else if(!news && params.newsId && id === '') {
       newsId(params.newsId)
     }
-  }, []);
+  }, [id, news, params.newsId]);
   
   if (!news) {
     return (

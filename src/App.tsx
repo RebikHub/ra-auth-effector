@@ -21,8 +21,6 @@ function App(): ReactElement {
   const newsItem = useStore($newsItem);
   const navigate = useNavigate();
   const location = useLocation();
-  
-  useEffect(() => localStorage.clear(), []);
 
   useEffect(() => {
     if (error) {
